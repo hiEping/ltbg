@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.101.0">
+    <title>流通保供数据管理系统</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/sticky-footer-navbar/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='sticky-footer-navbar.css')}}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand mx-5" href="#">
+                <img src="{{url_for('static', filename='assets/brand/bootstrap-solid.svg')}}" width="30" height="30"
+                    class="d-inline-block align-top" alt="">
+                流通保供数据管理系统
+            </a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown ml-5 ">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            数据录入
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/retail_prices">日度农贸价格数据</a>
+                            <a class="dropdown-item" href="/pfJxc">日度批发进销存数据</a>
+                            <a class="dropdown-item" href="/zb_xb">商品销售额统计旬报</a>
+                            <a class="dropdown-item" href="/wdPfJxc">网点日度批发进销存数据</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            系统管理
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">用户管理</a>
+                            <a class="dropdown-item" href="#">系统设置</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="dropdown  mr-2">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
+                        {{username}}
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">修改密码</a>
+                        <a class="dropdown-item" href="#">修改个人信息</a>
+                    </div>
+                </div>
+                <form class="form-inline mt-2 mt-md-0 mr-5" action="/logout">
+                    <button class="btn btn-secondary mr-5" type="submit" aria-expanded="false">
+                        登出
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    {% block page_content %}{% endblock %}
+
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <!-- <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script> -->
+    <script src="{{url_for('static', filename='assets/dist/js/bootstrap.bundle.min.js')}}"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

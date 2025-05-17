@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block page_content %}
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <div class="alert alert-primary mt-3" role="alert">
+            <p class="mt-3">用于重点零售企业上传商品的销售额旬报数据
+            </p>
+            <p class="">
+                上传规则：每月11日推送本月上旬报，每月21日推送本月中旬报，下月1日推送本月下旬报。例，20250311上传202503上旬；20250321上传202503中旬；20250401上传202503下旬。
+            </p>
+            <p class="">
+                报表期、统一社会信用代码、指标，三者作为联合增量，需唯一。
+            </p>
+        </div>
+        <h5 class="mt-3">录入重点零售企业商品销售额统计旬报</h5>
+    </div>
+</main>
+{% endblock %}
