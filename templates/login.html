@@ -36,6 +36,17 @@
 </head>
 
 <body class="text-center">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flashes">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">  {# 使用 Bootstrap 样式 #}
+            {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
     <form class="form-signin" action="/login" method="post">
         <img class="mb-4" src="{{url_for('static', filename='assets/brand/bootstrap-solid.svg')}}" alt="" width="72"
             height="72">

@@ -12,10 +12,13 @@ import os
 # 初始化应用
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'lyjt1204'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market_monitor.db?charset=gbk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market_monitor.db?charset=utf-8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)  # 初始化 Migrate
+
+# 全局配置变量
+API_CONFIG = {}
 
 # ======================================
 # 数据库模型定义
@@ -35,11 +38,11 @@ class MmsPriceRpt(db.Model):
     # 企业统一平台编码
     loginName = db.Column(db.String(50), nullable=False)
     # 品类编码
-    commodityId = db.Column(db.String(20), primary_key=True, nullable=False)
+    commodityId = db.Column(db.String(20), primary_key=True)
     # 零售价格
     price = db.Column(db.Float, nullable=False)
     # 报表日期，格式为“yyyy-MM-dd”
-    rptdate = db.Column(db.Date, nullable=False, default=datetime.now)
+    rptdate = db.Column(db.Date, primary_key=True, default=datetime.now)
     # 报送日期，格式为“yyyy-MM-dd hh24:mi:ss”
     createTime = db.Column(db.DateTime, nullable=False, default=datetime.now)
     # 修改时间，格式为“yyyy-MM-dd hh24:mi:ss”
@@ -59,9 +62,9 @@ class MmsPriceRpt(db.Model):
 class WisDayJxcRpt(db.Model):
     __tablename__ = 'wis_day_jxc_rpt'
     # 企业统一平台编码
-    loginName = db.Column(db.String(50), nullable=False)
+    loginName = db.Column(db.String(50), primary_key=True)
     # 品类编码
-    commodityId = db.Column(db.String(20), primary_key=True, nullable=False)
+    commodityId = db.Column(db.String(20), primary_key=True)
     # 交易量
     amount = db.Column(db.Float, nullable=False)
     # 库存量
@@ -69,7 +72,7 @@ class WisDayJxcRpt(db.Model):
     # 进货量
     instock = db.Column(db.Float, nullable=False)
     # 报表日期，格式为“yyyy-MM-dd”
-    rptdate = db.Column(db.Date, nullable=False, default=datetime.now)
+    rptdate = db.Column(db.Date, primary_key=True, default=datetime.now)
     # 报送日期，格式为“yyyy-MM-dd hh24:mi:ss”
     createTime = db.Column(db.DateTime, nullable=False, default=datetime.now)
     # 修改时间，格式为“yyyy-MM-dd hh24:mi:ss”
@@ -85,7 +88,7 @@ class WisDayJxcRpt(db.Model):
     # 统计负责人
     statistician = db.Column(db.String(50), nullable=False)
     # 产地，传6位地区编码。
-    originPlace = db.Column(db.String(6), nullable=False)
+    originPlace = db.Column(db.String(6), primary_key=True)
     # 生产商名称
     manufacturerName = db.Column(db.String(150), nullable=False)
     # 生产商地址
@@ -121,9 +124,9 @@ class WisUploadProductDtl(db.Model):
     # 网点编码(网点唯一编码)网点编码和网点外部编码不能同时为空
     nodeCode = db.Column(db.String(20), default='')
     # 网点外部编码（企业维护唯一编码）网点编码和网点外部编码不能同时为空
-    foreignId = db.Column(db.String(20), default='')
+    foreignId = db.Column(db.String(20), primary_key=True)
     # 品类编码，详见附录：应急保供零售品类字典表
-    commodityId = db.Column(db.String(20), primary_key=True, nullable=False)
+    commodityId = db.Column(db.String(20), primary_key=True)
     # 库存量
     stock = db.Column(db.Float, nullable=False)
     # 进货量
@@ -131,7 +134,7 @@ class WisUploadProductDtl(db.Model):
     # 销售量
     amount = db.Column(db.Float, nullable=False)
     # 报表时间yyyy-MM-dd hh:mm:ss
-    rptdate = db.Column(db.Date, nullable=False, default=datetime.now)
+    rptdate = db.Column(db.Date, primary_key=True, default=datetime.now)
 
 # 市场监测品类字典表（码表4.1）
 class ScjcPl(db.Model):
@@ -170,7 +173,7 @@ class XbZb(db.Model):
 class QyCode(db.Model):
     __tablename__ = 'qy_code_dict'
     qy_code = db.Column(db.String(20), primary_key=True)
-    qy_name = db.Column(db.String(100), primary_key=True)
+    qy_name = db.Column(db.String(100), nullable=False)
 
 # 价格类型字典表（码表3）
 class PriceTypeDict(db.Model):
@@ -231,11 +234,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(login_name=username).first()
+        user = User.query.filter_by(username=username).first()
         
         if user and user.password == encrypt_password(password):
             session['user_id'] = user.id
-            session['username'] = user.login_name
+            session['username'] = user.username
+            session['telephone'] = user.telephone
             save_log('login', f'用户{username}登录成功')
             return redirect(url_for('index'))
         else:
@@ -285,6 +289,7 @@ def retail_prices():
     
     # 获取当前用户
     username = session.get('username')    
+    telephone = session.get('telephone')
     today = datetime.today().strftime('%Y-%m-%d')
 
     if request.method == 'POST':
@@ -360,6 +365,7 @@ def retail_prices():
                         #   pagination=pagination,
                             username=username,
                             today=today,
+                            telephone=telephone,
                             # commodities=commodities,
                             # commodity_map=commodity_map
                             )
@@ -507,6 +513,38 @@ def user_management():
     # 查询用户数据
     users = User.query.all()
     return render_template('user_management.html', users=users)
+
+def get_project_root():
+    """获取项目根目录路径"""
+    # 假设app.py位于项目根目录或其子目录中
+    current_file = os.path.abspath(__file__)
+    return os.path.dirname(current_file)
+
+def load_config():
+    """加载配置文件内容到全局变量"""
+    global API_CONFIG
+    project_root = get_project_root()
+    # 配置文件位于static目录下
+    config_path = os.path.join(project_root, 'static', 'settings.json')
+    
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            API_CONFIG = json.load(f)
+        print(f"配置文件加载成功: {config_path}")
+    except FileNotFoundError:
+        print(f"错误: 配置文件 {config_path} 不存在")
+        API_CONFIG = {
+            "api1": "http://default-api1.com",
+            "api2": "http://default-api2.com",
+            "api3": "http://default-api3.com",
+            "api4": "http://default-api4.com"
+        }
+    except json.JSONDecodeError:
+        print(f"错误: 配置文件 {config_path} 格式不正确")
+        API_CONFIG = {}
+
+# 项目启动时加载配置
+load_config()
 
 if __name__ == '__main__':
     app.run(debug=True)    

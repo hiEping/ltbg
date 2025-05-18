@@ -1,6 +1,32 @@
 {% extends "base.html" %}
+{% block styles %}
+{{super()}}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #82878d;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .item-card {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #82878d;
+        border-radius: 5px;
+        background-color: rgb(39, 38, 38);
+    }
+    .btn-add-item {
+        margin-top: 10px;
+    }
+    .commodity-select {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
 {% block page_content %}
-<main role="main" class="flex-shrink-0">
     <div class="container">
         <div class="alert alert-primary mt-3" role="alert">
             <p class="mt-3">用于农贸市场企业上传标准商品的零售价格数据。
@@ -8,58 +34,313 @@
             <p class="">报表日期、企业统一平台编码、品类编码，三者作为联合增量，需唯一。
             </p>
         </div>
-        <h5 class="mt-3">录入日度农贸价格数据</h5>
-        <form>
-            <div class="form-group">
-                <label for="loginName">企业统一平台编码</label>
-                <input type="text" class="form-control" id="loginName" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="commodityId">品类编码</label>
-                <input type="text" class="form-control" id="commodityId" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="price">零售价格</label>
-                <input type="text" class="form-control" id="price" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="rptdate">报表日期</label>
-                <input type="date" class="form-control" id="rptdate" value="{{today}}">
-            </div>
-            <!-- 报送时间为上传时的系统时间 -->
-            <!-- 修改时间为保存时的系统时间 -->
-            <!-- <div class="form-group">
-                <label for="createTime">报送日期</label>
-                <input type="datetime" class="form-control" id="createTime" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="updateTime">修改时间</label>
-                <input type="datetime" class="form-control" id="updateTime" placeholder="AS135OBOA234NS1PN">
-            </div> -->
-            <div class="form-group">
-                <label for="linkman">填报人</label>
-                <input type="text" class="form-control" id="linkman" placeholder="{{username}}">
-            </div>
-            <div class="form-group">
-                <label for="telephone">联系方式</label>
-                <input type="text" class="form-control" id="telephone" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="memo">简要分析</label>
-                <textarea type="text" class="form-control" id="memo" placeholder="正常市场波动"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="leader">单位负责人</label>
-                <input type="text" class="form-control" id="leader" placeholder="AS135OBOA234NS1PN">
-            </div>
-            <div class="form-group">
-                <label for="statistician">统计负责人</label>
-                <input type="text" class="form-control" id="statistician" placeholder="{{username}}">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="form-control btn-primary" id="save">
-            </div>
-        </form>
+        <h5 class="mt-5">录入日度农贸价格数据</h5>
+        <div class="form-container mt-3">
+            <form id="dataForm">
+                <div id="itemsContainer">
+                    <!-- 第一个数据项 -->
+                    <div class="item-card">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="loginName">登录名:</label>
+                                    <input type="text" class="form-control" id="loginName" name="loginName" value="420107000001">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price">价格:</label>
+                                    <input type="text" class="form-control" id="price" name="price" value="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="commodityId">商品ID:</label>
+                                    <select class="form-control commodity-select" id="commodityId" name="commodityId">
+                                        <option value="1101">1101</option>
+                                        <option value="1102">1102</option>
+                                        <option value="1103">1103</option>
+                                        <option value="1104">1104</option>
+                                        <option value="1105">1105</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rptdate">报告日期:</label>
+                                    <input type="date" class="form-control" id="rptdate" name="rptdate" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="updateTime">更新时间:</label>
+                                    <input type="datetime-local" class="form-control" id="updateTime" name="updateTime" value="1999-07-24T11:11:11">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="createTime">创建时间:</label>
+                                    <input type="datetime-local" class="form-control" id="createTime" name="createTime" value="1999-07-24T11:11:11">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="linkman">联系人:</label>
+                                    <input type="text" class="form-control" id="linkman" name="linkman" value="{{username}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="telephone">电话:</label>
+                                    <input type="text" class="form-control" id="telephone" name="telephone" value="{{telephone}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="leader">负责人:</label>
+                                    <input type="text" class="form-control" id="leader" name="leader" value="赵四">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="statistician">统计员:</label>
+                                    <input type="text" class="form-control" id="statistician" name="statistician" value="{{username}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="memo">备注:</label>
+                            <textarea class="form-control" id="memo" name="memo" rows="3" placeholder="正常价格波动"></textarea>
+                        </div>
+                    </div>                    
+                </div>
+                
+                <button type="button" class="btn btn-primary btn-add-item" id="addItemBtn">
+                    <i class="fas fa-plus"></i> 添加商品项
+                </button>
+                
+                <div class="mt-4">
+                    <button type="button" class="btn btn-secondary mr-2" id="resetBtn">重置</button>
+                    <button type="button" class="btn btn-success" id="submitBtn">提交数据</button>
+                </div>
+                
+                <!-- <div class="mt-4">
+                    <h4>提交的数据:</h4>
+                    <pre id="outputData" class="bg-light p-3 rounded border"></pre>
+                </div> -->
+            </form>
+        </div>
     </div>
-</main>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // 商品ID选项
+        const commodityOptions = [
+            { value: "1101", text: "1101" },
+            { value: "1102", text: "1102" },
+            { value: "1103", text: "1103" },
+            { value: "1104", text: "1104" },
+            { value: "1105", text: "1105" }
+        ];
+        
+        // 添加新商品项
+        document.getElementById('addItemBtn').addEventListener('click', function() {
+            const container = document.getElementById('itemsContainer');
+            const itemCount = container.querySelectorAll('.item-card').length;
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'item-card';
+            newItem.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="loginName${itemCount}">登录名:</label>
+                            <input type="text" class="form-control" id="loginName${itemCount}" name="loginName${itemCount}" value="420107000001">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="price${itemCount}">价格:</label>
+                            <input type="text" class="form-control" id="price${itemCount}" name="price${itemCount}" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="commodityId${itemCount}">商品ID:</label>
+                            <select class="form-control commodity-select" id="commodityId${itemCount}" name="commodityId${itemCount}">
+                                ${commodityOptions.map(option => `<option value="${option.value}">${option.text}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="rptdate${itemCount}">报告日期:</label>
+                            <input type="date" class="form-control" id="rptdate${itemCount}" name="rptdate${itemCount}" value="${getCurrentDate()}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="updateTime${itemCount}">更新时间:</label>
+                            <input type="datetime-local" class="form-control" id="updateTime${itemCount}" name="updateTime${itemCount}" value="${getCurrentDateTime()}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="createTime${itemCount}">创建时间:</label>
+                            <input type="datetime-local" class="form-control" id="createTime${itemCount}" name="createTime${itemCount}" value="${getCurrentDateTime()}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="linkman${itemCount}">联系人:</label>
+                            <input type="text" class="form-control" id="linkman${itemCount}" name="linkman${itemCount}" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="telephone${itemCount}">电话:</label>
+                            <input type="text" class="form-control" id="telephone${itemCount}" name="telephone${itemCount}" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="leader${itemCount}">负责人:</label>
+                            <input type="text" class="form-control" id="leader${itemCount}" name="leader${itemCount}" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="statistician${itemCount}">统计员:</label>
+                            <input type="text" class="form-control" id="statistician${itemCount}" name="statistician${itemCount}" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="memo${itemCount}">备注:</label>
+                    <textarea class="form-control" id="memo${itemCount}" name="memo${itemCount}" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm delete-item">
+                    <i class="fas fa-trash"></i> 删除此项
+                </button>
+            `;
+            
+            container.appendChild(newItem);
+            
+            // 为删除按钮添加事件
+            newItem.querySelector('.delete-item').addEventListener('click', function() {
+                container.removeChild(newItem);
+                updateOutputData();
+            });
+            
+            // 为新添加的表单元素添加事件监听
+            const inputs = newItem.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateOutputData);
+                input.addEventListener('keyup', updateOutputData);
+            });
+            
+            updateOutputData();
+        });
+        
+        // 重置按钮
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('dataForm').reset();
+            updateOutputData();
+        });
+        
+        // 提交按钮
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const data = collectFormData();
+            console.log('提交的数据:', data);
+            
+            // 这里可以添加AJAX请求代码将数据发送到服务器
+            alert('数据已提交! 查看控制台获取详细数据。');
+        });
+        
+        // 为现有表单元素添加事件监听
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('#dataForm input, #dataForm select, #dataForm textarea');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateOutputData);
+                input.addEventListener('keyup', updateOutputData);
+            });
+            
+            updateOutputData();
+        });
+        
+        // 收集表单数据
+        function collectFormData() {
+            const items = [];
+            const itemCards = document.querySelectorAll('.item-card');
+            
+            itemCards.forEach((card, index) => {
+                const item = {
+                    loginName: document.getElementById(`loginName${index}`).value,
+                    price: document.getElementById(`price${index}`).value,
+                    commodityId: document.getElementById(`commodityId${index}`).value,
+                    rptdate: document.getElementById(`rptdate${index}`).value,
+                    updateTime: document.getElementById(`updateTime${index}`).value,
+                    createTime: document.getElementById(`createTime${index}`).value,
+                    linkman: document.getElementById(`linkman${index}`).value,
+                    telephone: document.getElementById(`telephone${index}`).value,
+                    memo: document.getElementById(`memo${index}`).value,
+                    leader: document.getElementById(`leader${index}`).value,
+                    statistician: document.getElementById(`statistician${index}`).value
+                };
+                
+                // 将日期时间格式转换为服务器可能需要的格式
+                if (item.updateTime) item.updateTime = item.updateTime.replace('T', ' ');
+                if (item.createTime) item.createTime = item.createTime.replace('T', ' ');
+                
+                items.push(item);
+            });
+            
+            return { items };
+        }
+        
+        // 更新输出数据显示
+        function updateOutputData() {
+            const data = collectFormData();
+            document.getElementById('outputData').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        // 获取当前日期 (YYYY-MM-DD)
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        // 获取当前日期时间 (YYYY-MM-DDTHH:MM:SS)
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+        }        
+
+    </script>
 {% endblock %}

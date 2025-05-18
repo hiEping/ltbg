@@ -1,0 +1,6 @@
+{
+    "api-3-4": "http://58.48.136.183:19090/hbyjbg-api/model/v2/mmsPriceRptTest",
+    "api-3-6": "http://58.48.136.183:19090/hbyjbg-api/model/v2/wisDayJxcRptTest",
+    "api-3-10": "http://58.48.136.183:8081/whswj/zt/api/dataservice/v1/ODS_ZDLSQY_SBXSE_XB",
+    "api-3-12": "http://58.48.136.183:1990/proxy/sgp/subject/wisUploadProductDtl"
+}    
