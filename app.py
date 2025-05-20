@@ -243,8 +243,7 @@ def login():
             save_log('login', f'用户{username}登录成功')
             return redirect(url_for('index'))
         else:
-            flash('用户名或密码错误', 'error')
-    
+            flash('用户名或密码错误', 'error')    
     return render_template('login.html')
 
 
@@ -312,7 +311,7 @@ def retail_prices():
                 db.session.add(new_record)
                 db.session.commit()
                 flash('添加成功', 'success')
-                save_log('form', f'用户{username}添加零售价格记录，商品ID:{commodity_id}')
+                save_log('form', f'用户{session.get('username')}添加零售价格记录，商品ID:{commodity_id}')
             except Exception as e:
                 db.session.rollback()
                 flash(f'添加失败: {str(e)}', 'error')
@@ -333,7 +332,7 @@ def retail_prices():
                     record.update_time = datetime.now()
                     db.session.commit()
                     flash('更新成功', 'success')
-                    save_log('form', f'用户{username}更新零售价格记录，ID:{record_id}')
+                    save_log('form', f'用户{session.get('username')}更新零售价格记录，ID:{record_id}')
                 else:
                     flash('记录不存在', 'error')
             except Exception as e:
@@ -363,12 +362,9 @@ def retail_prices():
     return render_template('retail_prices.html', 
                         #   data=data, 
                         #   pagination=pagination,
-                            username=username,
-                            today=today,
-                            telephone=telephone,
-                            # commodities=commodities,
-                            # commodity_map=commodity_map
-                            )
+                        #   commodities=commodities,
+                        #   commodity_map=commodity_map
+                        )
 
 # 应急保供日度批发进销存数据
 @app.route('/pfJxc', methods=['GET', 'POST'])
