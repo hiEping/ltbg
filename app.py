@@ -1,5 +1,5 @@
 # 导入必要的库
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify  
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -8,6 +8,7 @@ import json
 import logging
 from logging.handlers import TimedRotatingFileHandler
 import os
+from apiUtil import SignUtil
 
 # 初始化应用
 app = Flask(__name__)
@@ -31,6 +32,7 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     # 联系电话
     telephone = db.Column(db.String(20))
+    isAdmin = db.Column(db.Boolean, default='False')
 
 # 3.4 市场监测日度农贸价格数据
 class MmsPriceRpt(db.Model):
@@ -145,6 +147,16 @@ class ScjcPl(db.Model):
     type = db.Column(db.String(20))
     price_unit = db.Column(db.String(20))
     unit = db.Column(db.String(20))
+    
+    def to_dict(self):
+        return {
+            "commodity_id": self.commodity_id,
+            "commodity_name": self.commodity_name,
+            "parent_id": self.parent_id,
+            "type": self.type,
+            "price_unit": self.price_unit,
+            "unit": self.unit,
+        }
 
 # 应急保供零售品类字典表（码表4.2）
 class YjbgLsPl(db.Model):
@@ -180,6 +192,21 @@ class PriceTypeDict(db.Model):
     __tablename__ = 'price_type_dict'
     price_type_id = db.Column(db.String(20), primary_key=True)
     price_type_name = db.Column(db.String(100), nullable=False)
+
+# 生产商信息表
+class Manufacture(db.Model):
+    __tablename__ = 'manufacture_base_info'
+    id = db.Column(db.String(40), primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    pyName = db.Column(db.String(80))
+    address = db.Column(db.String(200), nullable=False)
+
+# 网点信息表
+class StoreInfo(db.Model):
+    __tablename__ = 'store_info'
+    id = db.Column(db.String(20), primary_key=True)
+    name = db.Column(db.String(40), nullable=False)
+
 
 # ======================================
 # 日志配置
@@ -232,15 +259,15 @@ def save_log(log_type, message):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        id = request.form['id']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(id=id).first()
         
         if user and user.password == encrypt_password(password):
             session['user_id'] = user.id
             session['username'] = user.username
             session['telephone'] = user.telephone
-            save_log('login', f'用户{username}登录成功')
+            save_log('login', f'用户{user.username}登录成功')
             return redirect(url_for('index'))
         else:
             flash('用户名或密码错误', 'error')    
@@ -287,100 +314,140 @@ def retail_prices():
         return redirect(url_for('login'))
     
     # 获取当前用户
-    username = session.get('username')    
-    telephone = session.get('telephone')
-    today = datetime.today().strftime('%Y-%m-%d')
+    # username = session.get('username')    
+    # telephone = session.get('telephone')
+    # today = datetime.today().strftime('%Y-%m-%d')
 
     if request.method == 'POST':
-        action = request.form.get('action')
+        # 添加新记录
+        commodityIds = request.form.getlist('commodityId[]')
+        prices = request.form.getlist('price[]')
+        rptdate = request.form.get('rptdate')
+        loginName = API_CONFIG['loginName']
+        memo = API_CONFIG['default_value_34']['memo']
+        linkman = request.form.get('linkman')
+        telephone = request.form.get('telephone')
+        leader = API_CONFIG['default_value_34']['leader']
+        statistician = request.form.get('statistician')
+        createTime = updateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        if action == 'add':
-            # 添加新记录
-            commodity_id = request.form.get('commodity_id')
-            price = request.form.get('price')
-            rptdate = request.form.get('rptdate')
-            
-            try:
-                price = float(price)
-                new_record = MmsPriceRpt(
-                    login_name=username,
-                    commodity_id=commodity_id,
-                    price=price,
-                    rptdate=rptdate
-                )
-                db.session.add(new_record)
-                db.session.commit()
-                flash('添加成功', 'success')
-                save_log('form', f'用户{session.get('username')}添加零售价格记录，商品ID:{commodity_id}')
-            except Exception as e:
-                db.session.rollback()
-                flash(f'添加失败: {str(e)}', 'error')
         
-        elif action == 'edit':
-            # 编辑记录
-            record_id = request.form.get('record_id')
-            commodity_id = request.form.get('commodity_id')
-            price = request.form.get('price')
-            rptdate = request.form.get('rptdate')
-            
-            try:
-                record = MmsPriceRpt.query.get(record_id)
-                if record:
-                    record.commodity_id = commodity_id
-                    record.price = float(price)
-                    record.rptdate = rptdate
-                    record.update_time = datetime.now()
-                    db.session.commit()
-                    flash('更新成功', 'success')
-                    save_log('form', f'用户{session.get('username')}更新零售价格记录，ID:{record_id}')
-                else:
-                    flash('记录不存在', 'error')
-            except Exception as e:
-                db.session.rollback()
-                flash(f'更新失败: {str(e)}', 'error')
-        
-        elif action == 'delete':
-            # 删除记录
-            record_id = request.form.get('record_id')
-            try:
-                record = MmsPriceRpt.query.get(record_id)
-                if record:
-                    db.session.delete(record)
-                    db.session.commit()
-                    flash('删除成功', 'success')
-                    save_log('form', f'用户{username}删除零售价格记录，ID:{record_id}')
-                else:
-                    flash('记录不存在', 'error')
-            except Exception as e:
-                db.session.rollback()
-                flash(f'删除失败: {str(e)}', 'error')
-        
+        if len(commodityIds) != len(prices):
+            return jsonify({"error": "数据不完整"}), 400
+
+        results = []
+        for commodityId, price in zip(commodityIds, prices):
+            results.append({
+                "loginName": loginName,
+                "rptdate": rptdate,
+                "memo": memo,
+                "linkman": linkman,
+                "telephone": telephone,
+                "leader": leader,
+                "statistician": statistician,
+                "createTime": createTime,
+                "updateTime": updateTime,
+                "commodityId": commodityId,
+                "price": price,
+            })
+
+        res = SignUtil.dataSend(API_CONFIG['api_uris']['api_3_4'],results)
+        save_log('form', f'提交市场监测日度农贸价格数据，返回信息: {res['message']}')
+        save_log('form', f'提交数据：\n{results}')
+
+        return res
+
     # 获取商品字典
-    # commodities = ScjcPl.query.all()
+    commodities = ScjcPl.query.filter_by(type='农贸市场')
     # commodity_map = {c.commodity_id: c.commodity_name for c in commodities}
-    
+
     return render_template('retail_prices.html', 
                         #   data=data, 
                         #   pagination=pagination,
-                        #   commodities=commodities,
-                        #   commodity_map=commodity_map
+                        username=session.get('username'),
+                        telephone=session.get('telephone'),
+                        leader=API_CONFIG['default_value_34']['leader'],
+                        memo=API_CONFIG['default_value_34']['memo'],
+                        commodities=commodities,
+                        # commodity_map=commodity_map,
                         )
 
 # 应急保供日度批发进销存数据
 @app.route('/pfJxc', methods=['GET', 'POST'])
-def emergency_wholesale():
+def pfJxc():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     
-    # 获取当前用户
-    username = session.get('username')
-    
+    if request.method == 'POST':
+        # 添加新记录
+        loginName = API_CONFIG['loginName']
+        commodityIds = request.form.getlist('commodityId[]')
+        amounts = request.form.getlist('amount[]')
+        stocks = request.form.getlist('stock[]')
+        instocks = request.form.getlist('instock[]')
+        rptdate = request.form.get('rptdate')
+        createTime = updateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        linkman = session.get('username')
+        telephone = session.get('telephone')
+        memo = API_CONFIG['default_value_36']['memo']
+        leader = API_CONFIG['default_value_36']['leader']
+        statistician = request.form.get('statistician')
+        originPlaces = request.form.getlist('originPlace[]')
+        manufacturerNames = request.form.getlist('manufacturerName[]')
+        manufacturerAddresses = request.form.getlist('manufacturerAddress[]')
+        
+        
+        if not (len(commodityIds) == len(amounts) == len(stocks) == len(instocks) == len(originPlaces) == len(manufacturerNames) == len(manufacturerAddresses)):
+            return jsonify({"error": "数据不完整"}), 400
+
+        results = []
+        for commodityId, amount, stock, instock, originPlace, manufacturerName, manufacturerAddress in zip(commodityIds, amounts, stocks, instocks, originPlaces, manufacturerNames, manufacturerAddresses):
+            results.append({
+                "loginName": loginName,
+                "commodityId": commodityId,
+                "amount": float(amount) ,
+                "stock": float(stock) ,
+                "instock": float(instock) ,
+                "rptdate": rptdate,
+                "createTime": createTime,
+                "updateTime": updateTime,
+                "linkman": linkman,
+                "telephone": telephone,
+                "memo": memo,
+                "leader": leader,
+                "statistician": linkman,
+                "originPlace": originPlace,
+                "manufacturerName": manufacturerName,
+                "manufacturerAddress": manufacturerAddress,
+            })
+
+        res = SignUtil.dataSend(API_CONFIG['api_uris']['api_3_6'],results)
+        save_log('form', f'提交应急保供日度批发进销存数据，返回信息: {res['message']}')
+        save_log('form', f'提交数据：\n{results}')
+
+        return res
+
+    # 获取商品字典
+    # commodities = ScjcPl.query.filter_by(type='批发')
+    commodities = YjbgPfPl.query.all()
+    # commodity_map = {c.commodity_id: c.commodity_name for c in commodities}    
+    # 获取产地字典
+    originPlaces = QyCode.query.all()
+    # 获取生产商信息
+    manufatucres = Manufacture.query.all()
+
     return render_template('pfJxc.html', 
                         #   data=data, 
                         #   pagination=pagination,
-                        #   commodities=commodities,
+                        # username=session.get('username'),
+                        # telephone=session.get('telephone'),
+                        # leader=API_CONFIG['default_value_36']['leader'],
+                        memo=API_CONFIG['default_value_36']['memo'],
+                        commodities=commodities,
+                        originPlaces=originPlaces,
+                        manufatucres=manufatucres,
                         #   commodity_map=commodity_map
-                          )
+                        )
 
 # 重点零售企业商品销售额统计旬报
 @app.route('/zb_xb', methods=['GET', 'POST'])
@@ -391,7 +458,56 @@ def zb_xb():
     # 获取当前用户
     username = session.get('username')
 
-    return render_template("zb_xb.html")
+    if request.method == 'POST':
+        # 添加新记录
+        TYSHXYDM = API_CONFIG['tyshxydm']
+        DWMC = API_CONFIG['dwmc']
+        BBQ = request.form.get('BBQ').replace('-','')+request.form.get('xun')+'旬'
+        DWFZR = API_CONFIG['default_value_310']['DWFZR']
+        TBR = session.get('username')
+        LXDH = session.get('telephone')
+        BCRQ = datetime.now().strftime('%Y-%m-%d')
+        # ZB = request.form.get('ZB')
+        BQZ = float(request.form.get('BQZ')) 
+        QNTQZ = float(request.form.get('QNTQZ'))     
+        
+        results = []
+        results += [{
+            "TYSHXYDM": TYSHXYDM,
+            "DWMC": DWMC,
+            "BBQ": BBQ,
+            "DWFZR": DWFZR,
+            "TBR": TBR,
+            "LXDH": LXDH,
+            "BCRQ": '2025-05-21',
+            "ZB": "10",
+            "BQZ": BQZ,
+            "QNTQZ": QNTQZ,
+        },{
+            "TYSHXYDM": TYSHXYDM,
+            "DWMC": DWMC,
+            "BBQ": BBQ,
+            "DWFZR": DWFZR,
+            "TBR": TBR,
+            "LXDH": LXDH,
+            "BCRQ": '2025-05-21',
+            "ZB": "11",
+            "BQZ": BQZ,
+            "QNTQZ": QNTQZ,
+        }]
+
+        res = SignUtil.dataSend(API_CONFIG['api_uris']['api_3_10'], results, False)
+        save_log('form', f'提交重点零售企业商品销售额统计旬报，返回信息: {res['message']}')
+        save_log('form', f'提交数据：\n{results}')
+
+        return res
+
+    # 获取商品字典
+    # commodities = ScjcPl.query.filter_by(type='批发')
+    zbs = XbZb.query.order_by(XbZb.zb_id).all()
+    # commodity_map = {c.commodity_id: c.commodity_name for c in commodities}   
+
+    return render_template("zb_xb.html", username=session.get("username"), telephone=session.get("telephone"))
 
 # （网点维度）应急保供日度批发进销存数据信息
 @app.route('/wdPfJxc', methods=['GET', 'POST'])
@@ -400,12 +516,50 @@ def wdDaily():
         return redirect(url_for('login'))
     
     # 获取当前用户
-    username = session.get('username')
+    # username = session.get('username')
 
-    return render_template('wdPfJxc.html')
+    if request.method == 'POST':
+        # 添加新记录
+        nodeCode = ''
+        foreignIds = request.form.getlist('foreignId[]')
+        commodityIds = request.form.getlist('commodityId[]')
+        stocks = request.form.getlist('stock[]')
+        instocks = request.form.getlist('instock[]')
+        amounts = request.form.getlist('amount[]')
+        rptdate = request.form.get('rptdate')
+
+        if len(foreignIds) != len(commodityIds):
+            return jsonify({"error": "数据不完整"}), 400
+
+        results = []
+        for commodityId, foreignId, stock, instock, amount in zip(commodityIds, foreignIds, stocks, instocks, amounts):
+            results.append({
+                "nodeCode": "",
+                "foreignId": foreignId,
+                "commodityId": commodityId,
+                "stock": float(stock) ,
+                "instock": float(instock) ,
+                "amount": float(amount) ,
+                "rptdate": rptdate,
+            })
+
+        res = SignUtil.dataSend(API_CONFIG['api_uris']['api_3_12'],results)
+        save_log('form', f'提交（网点维度）应急保供日度批发进销存数据信息，返回信息: {res['message']}')
+        save_log('form', f'提交数据：\n{results}')
+
+        return res
+
+    # 获取商品字典
+    # commodities = ScjcPl.query.filter_by(type='批发')
+    commodities = YjbgLsPl.query.all()
+    stores = StoreInfo.query.all()
+    # commodity_map = {c.commodity_id: c.commodity_name for c in commodities}   
+
+    return render_template('wdPfJxc.html', username=session.get('username'), telephone=session.get('telephone'), commodities=commodities, stores=stores)
 
 # 用户管理页面
 @app.route('/user_management', methods=['GET', 'POST'])
+
 def user_management():
     if 'user_id' not in session:
         return redirect(url_for('login'))
@@ -535,7 +689,8 @@ def load_config():
             "api3": "http://default-api3.com",
             "api4": "http://default-api4.com"
         }
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        print(str(e))
         print(f"错误: 配置文件 {config_path} 格式不正确")
         API_CONFIG = {}
 

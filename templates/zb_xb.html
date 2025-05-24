@@ -1,18 +1,173 @@
 {% extends "base.html" %}
+
 {% block page_content %}
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <div class="alert alert-primary mt-3" role="alert">
-            <p class="mt-3">用于重点零售企业上传商品的销售额旬报数据
-            </p>
-            <p class="">
-                上传规则：每月11日推送本月上旬报，每月21日推送本月中旬报，下月1日推送本月下旬报。例，20250311上传202503上旬；20250321上传202503中旬；20250401上传202503下旬。
-            </p>
-            <p class="">
-                报表期、统一社会信用代码、指标，三者作为联合增量，需唯一。
-            </p>
-        </div>
-        <h5 class="mt-3">录入重点零售企业商品销售额统计旬报</h5>
+<div class="container">
+    <div class="alert alert-primary mt-3" role="alert">
+        <p class="mt-3">用于重点零售企业上传商品的销售额旬报数据
+        </p>
+        <p class="">
+            上传规则：每月11日推送本月上旬报，每月21日推送本月中旬报，下月1日推送本月下旬报。例，20250311上传202503上旬；20250321上传202503中旬；20250401上传202503下旬。
+        </p>
+        <!-- <p class="">
+            报表期、统一社会信用代码、指标，三者作为联合增量，需唯一。
+        </p> -->
     </div>
-</main>
+    <h5 class="my-5">录入重点零售企业商品销售额统计旬报</h5>
+
+    <form id="dataForm" class="custom-form">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="BBQ">报表期:</label>
+                    <div class="input-group">
+                        <input type="month" class="form-control" style="width: 55%;" id="BBQ" name="BBQ" />
+                        <input type="text" class="form-control" style="width: 16%; " id="xun" name="xun" value="" />
+                        <div class="input-group-append" id="selectXunDropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-expanded="false">旬</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">上</a>
+                                <a class="dropdown-item" href="#">中</a>
+                                <a class="dropdown-item" href="#">下</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="TBR">填表人:</label>
+                    <input type="text" class="form-control" id="TBR" name="TBR" value="{{username}}">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LXDH">联系电话:</label>
+                    <input type="text" class="form-control" id="LXDH" name="LXDH" value="{{telephone}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ZB">指标</label>
+                    <select type="text" class="form-control" id="ZB" name="ZB">
+                        <option value="11">11-粮油食品</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="BQZ">本期值:</label>
+                    <input type="text" class="form-control" id="BQZ" name="BQZ" value="0">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="QNTQZ">去年同期值:</label>
+                    <input type="text" class="form-control" id="QNTQZ" name="QNTQZ" value="0">
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block footer_content %}
+<div class="container d-flex justify-content-end">
+    <!-- <span class="text-muted">Place sticky footer content here.</span> -->
+    <!-- <button type="button" class="btn btn-default mr-3" onclick="createToast('操作成功', '您的请求已成功处理！', 'success')">toast
+        test</button> -->
+    <button type="submit" class="btn btn-primary btn-sm px-3" form="dataForm">提交</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // 获取上一旬的月份 (YYYY-MM-DD)
+    function getCurrentMonth() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const day = now.getDate();
+        if (now.getDate() <= 10)
+            if (now.getMonth() == 0)
+                return `${year - 1}-12`
+            else
+                return `${year}-${String(month).padStart(2, '0')}`
+        else
+            return `${year}-${String(month + 1).padStart(2, '0')}`
+    }
+
+    // 获取当前日期时间 (YYYY-MM-DD HH:MM:SS)
+    function getCurrentDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // 获取当前旬的前一旬名称
+    function getDecadeOfMonth() {
+        const today = new Date();
+        const day = today.getDate();
+
+        if (day >= 1 && day <= 10) {
+            return '下';
+        } else if (day >= 11 && day <= 20) {
+            return '上';
+        } else {
+            return '中';
+        }
+    }
+
+    // 初始化页面
+    $(document).ready(function () {
+        // 获取当前月份
+        document.getElementById('BBQ').value = getCurrentMonth();
+        $('#xun').val(getDecadeOfMonth());
+        // 监听变化事件，转换为 yyyymm 格式
+        // picker.addEventListener('change', function () {
+        //     const value = this.value; // 原生值为 "YYYY-MM"（如 "2023-10"）
+        //     const yyyymm = value.replace(/-/g, ''); // 移除横线，转为 "202310"
+        // });
+        $('#selectXunDropdown a').click((e) => {
+            $('#xun').val(e.target.innerHTML)
+        })
+        // 表单提交处理
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 使用FormData对象收集表单数据
+            const formData = new FormData(this);
+
+            // 模拟提交数据
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
+
+            // 发送数据
+            fetch('/zb_xb', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    dataobj = JSON.parse(data.message)
+                    if (data.code && data.code == 200)
+                        createToast('成功', '数据已上传', 'success')
+                    else
+                        createToast('错误', '数据上传出错', 'error')
+                })
+                .catch(error => console.error('Error:', error));
+            /*
+            */
+        });
+    });
+</script>
 {% endblock %}

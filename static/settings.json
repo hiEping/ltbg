@@ -1,6 +1,32 @@
 {
-    "api-3-4": "http://58.48.136.183:19090/hbyjbg-api/model/v2/mmsPriceRptTest",
-    "api-3-6": "http://58.48.136.183:19090/hbyjbg-api/model/v2/wisDayJxcRptTest",
-    "api-3-10": "http://58.48.136.183:8081/whswj/zt/api/dataservice/v1/ODS_ZDLSQY_SBXSE_XB",
-    "api-3-12": "http://58.48.136.183:1990/proxy/sgp/subject/wisUploadProductDtl"
-}    
+    "loginName": "whlyjtcomcn1",
+    "tyshxydm": "91420100MA49HLCM9Q",
+    "dwmc": "武汉粮油集团有限公司",
+    "api_uris": {
+        "api_3_4": "http://58.48.136.183:19090/hbyjbg-api/model/v2/mmsPriceRptTest",
+        "api_3_6": "http://58.48.136.183:19090/hbyjbg-api/model/v2/wisDayJxcRptTest",
+        "api_3_10": "http://58.48.136.183:8081/whswj/zt/api/dataservice/v1/ODS_ZDLSQY_SBXSE_XB",
+        "api_3_12": "http://58.48.136.183:1990/proxy/sgp/subject/wisUploadProductDtl"
+    },
+    "api_uris_test": {
+        "api_3_4": "http://58.48.136.183:19090/hbyjbg-api/model/v2/mmsPriceRptTest",
+        "api_3_6": "http://58.48.136.183:19090/hbyjbg-api/model/v2/wisDayJxcRptTest",
+        "api_3_10": "http://58.48.136.183:8081/whswj/zt/api/dataservice/v1/ODS_ZDLSQY_SBXSE_XB",
+        "api_3_12": "http://58.48.136.183:1990/proxy/sgp/subject/wisUploadProductDtl"
+    },
+    "default_value_34": {
+        "memo": "价格正常波动",
+        "leader": "分管领导XXX"
+    },
+    "default_value_36": {
+        "memo": "正常波动",
+        "leader": "分管领导XXX"
+    },
+    "default_value_310": {
+        "DWFZR": "分管领导XXX"
+    },
+    "default_value_312": {
+        "DWFZR": "分管领导XXX"
+    },
+    "defaultPW": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
+}

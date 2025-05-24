@@ -1,7 +1,11 @@
 {% extends "base.html" %}
+{% block head_extend %}
+<!-- <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+{% endblock %}
 {% block styles %}
 {{super()}}
-<style>
+<!-- <style>
     .form-container {
         max-width: 800px;
         margin: 30px auto;
@@ -14,7 +18,7 @@
     .item-card {
         margin-bottom: 20px;
         padding: 15px;
-        border: 1px solid #82878d;
+        border: 1px solid #335885;
         border-radius: 5px;
         background-color: rgb(39, 38, 38);
     }
@@ -26,8 +30,9 @@
     .commodity-select {
         width: 100%;
     }
-</style>
+</style> -->
 {% endblock %}
+
 
 {% block page_content %}
 <div class="container">
@@ -37,98 +42,90 @@
         <p class="">报表日期、企业统一平台编码、品类编码，三者作为联合增量，需唯一。
         </p>
     </div>
-    <h5 class="mt-5">录入日度农贸价格数据</h5>
-    <div class="form-container mt-3">
-        <form id="dataForm" action="/retail_prices" method="post">
-            <div id="itemsContainer">
-                <!-- 第一个数据项 -->
-                <div class="item-card">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="loginName">企业统一平台编码:</label>
-                                <input type="text" class="form-control" id="loginName" name="loginName"
-                                    value="420107000001">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="price">零售价格:</label>
-                                <input type="text" class="form-control" id="price" name="price" value="30">
-                            </div>
+    <h5 class="my-5">录入日度农贸价格数据</h5>
+    <form id="dataForm" class="custom-form">
+        <div class="row ">
+            <div class="col-md-5">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="rptdate">报表日期:</label>
+                            <input type="text" class="form-control" id="rptdate" name="rptdate">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="commodityId">品类编码:</label>
-                                <select class="form-control commodity-select" id="commodityId" name="commodityId">
-                                    <option value="1101">1101</option>
-                                    <option value="1102">1102</option>
-                                    <option value="1103">1103</option>
-                                    <option value="1104">1104</option>
-                                    <option value="1105">1105</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="rptdate">报表日期:</label>
-                                <input type="text" class="form-control" id="rptdate" name="rptdate"
-                                    placeholder="getCurrentDateTime()">
-                            </div>
+                </div>
+                <div class="form-row">
+                    <div class="col col-md-12">
+                        <div class="form-group">
+                            <label for="memo">简要分析:</label>
+                            <textarea class="form-control" id="memo" name="memo" rows="3">{{memo}}</textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="memo">简要分析:</label>
-                        <textarea class="form-control" id="memo" name="memo" rows="3" placeholder="正常价格波动"></textarea>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="linkman">填报人:</label>
-                                <input type="text" class="form-control" id="linkman" name="linkman"
-                                    value="{{username}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="telephone">联系方式:</label>
-                                <input type="text" class="form-control" id="telephone" name="telephone"
-                                    value="{{telephone}}">
-                            </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="linkman">填报人:</label>
+                            <input type="text" class="form-control" id="linkman" name="linkman" value="{{username}}">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="leader">单位负责人:</label>
-                                <input type="text" class="form-control" id="leader" name="leader" value="赵四">
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="telephone">联系方式:</label>
+                            <input type="text" class="form-control" id="telephone" name="telephone"
+                                value="{{telephone}}">
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="statistician">统计负责人:</label>
-                                <input type="text" class="form-control" id="statistician" name="statistician"
-                                    value="{{username}}">
-                            </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="leader">单位负责人:</label>
+                            <input type="text" class="form-control" id="leader" name="leader" value={{leader}}>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="statistician">统计负责人:</label>
+                            <input type="text" class="form-control" id="statistician" name="statistician"
+                                value="{{username}}">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="clearfix">
+                        <h6 class="float-left py-1 ">商品价格明细</h6>
+                        <a id="addItemBtn" type="button" class="btn btn-secondary btn-sm float-right"
+                            onclick="addNewItem">添加明细</a>
+                    </div>
+                    <table class="table table-sm table-borderless" name="detailTable" id="detailTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col" style="width: 50%;">品类编码</th>
+                                <th scope="col" style="width: 30%;">零售价格</th>
+                                <th scope="col">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
 
-            <button type="button" class="btn btn-default border  btn-add-item" id="addItemBtn">
-                <i class="fas fa-plus"></i> 添加商品项<span aria-hidden="true">&plus;</span>
-            </button>
-
-            <div class="mt-5"></div>
-
-            <!-- <div class="mt-4">
-                    <h4>提交的数据:</h4>
-                    <pre id="outputData" class="bg-light p-3 rounded border"></pre>
-                </div> -->
-        </form>
-    </div>
+{% block footer_content %}
+<div class="container d-flex justify-content-end">
+    <!-- <span class="text-muted">Place sticky footer content here.</span> -->
+    <!-- <button type="button" class="btn btn-default mr-3" onclick="createToast('操作成功', '您的请求已成功处理！', 'success')">toast
+        test</button> -->
+    <button type="submit" class="btn btn-primary btn-sm px-3" form="dataForm">提交</button>
 </div>
 {% endblock %}
 
@@ -334,7 +331,38 @@
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
 
-    // 初始化日期选择器
+    // 添加新商品项
+    function addNewItem() {
+        const container = document.getElementById('detailTable');
+        const newItem = document.createElement('tr');
+        newItem.innerHTML = `
+                                <td>
+                                    <select class="form-control " name="commodityId[]">
+                                        <option selected>请选择</option>
+                                        {% for c in commodities %}
+                                        <option value={{c.commodity_id}}>
+                                            {{c.commodity_id}}-{{c.commodity_name}}-{{c.type}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" name="price[]"></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            `;
+
+        container.prepend(newItem);
+
+        // 为删除按钮添加事件
+        newItem.querySelector('button').addEventListener('click', function () {
+            container.removeChild(newItem);
+        });
+    }
+
+    // 初始化页面
     $(document).ready(function () {
         // 获取当前日期
         const today = new Date();
@@ -342,10 +370,47 @@
 
         // 初始化日期选择器并设置初始值
         $('#rptdate').datepicker({
+            language: 'zh-CN',
             format: 'yyyy-mm-dd', // 日期格式
             todayHighlight: true, // 高亮今天
             autoclose: true       // 选择后自动关闭
         }).datepicker('setDate', formattedDate); // 设置初始值
+
+        //给表格添加第一行
+        addNewItem();
+
+        //添加新商品点击事件处理
+        document.getElementById('addItemBtn').addEventListener('click', addNewItem);
+
+        // 表单提交处理
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 使用FormData对象收集表单数据
+            const formData = new FormData(this);
+
+            // 模拟提交数据
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
+
+            // 发送数据
+            fetch('/retail_prices', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    dataobj = JSON.parse(data.message)
+                    if (data.code && data.code == 200)
+                        createToast('成功', '数据已上传', 'success')
+                    else
+                        createToast('错误', '数据上传出错', 'error')
+                })
+                .catch(error => console.error('Error:', error));
+            /*
+            */
+        });
     });
 </script>
 {% endblock %}

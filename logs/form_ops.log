@@ -1,8 +1,98 @@
-2025-05-20 07:46:05,309 - INFO - 登录日志: admin用户登出
-2025-05-20 07:46:46,843 - INFO - 登录日志: 用户admin登录成功
-2025-05-20 08:11:18,236 - INFO - 登录日志: admin用户登出
-2025-05-20 08:12:42,806 - INFO - 登录日志: 用户admin登录成功
-2025-05-20 08:15:16,946 - INFO - 登录日志: 未知用户用户登出
-2025-05-20 08:15:42,928 - INFO - 登录日志: 用户admin登录成功
-2025-05-20 08:19:29,656 - INFO - 登录日志: admin用户登出
-2025-05-20 08:19:32,816 - INFO - 登录日志: 用户admin登录成功
+2025-05-24 07:47:05,135 - INFO - 登录日志: 用户admin登录成功
+2025-05-24 09:41:29,259 - INFO - 表单操作: 提交应急保供日度批发进销存数据，返回信息: {"code":400,"message":"请求参数错误！","data":"empty String"}
+2025-05-24 09:41:29,263 - INFO - 表单操作: 提交数据：
+[{'loginName': 'whlyjtcomcn1', 'commodityId': '请选择', 'amount': '', 'stock': '', 'instock': '', 'rptdate': '2025-05-24', 'createTime': '2025-05-24 09:41:29', 'updateTime': '2025-05-24 09:41:29', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '请选择', 'manufacturerName': '张家湾食品厂', 'manufacturerAddress': 'undefined'}]
+2025-05-24 09:42:17,106 - INFO - 表单操作: 提交应急保供日度批发进销存数据，返回信息: {"code":400,"message":"请求参数错误！","data":"empty String"}
+2025-05-24 09:42:17,107 - INFO - 表单操作: 提交数据：
+[{'loginName': 'whlyjtcomcn1', 'commodityId': '请选择', 'amount': '', 'stock': '', 'instock': '', 'rptdate': '2025-05-24', 'createTime': '2025-05-24 09:42:17', 'updateTime': '2025-05-24 09:42:17', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '请选择', 'manufacturerName': '张家湾食品厂', 'manufacturerAddress': '武汉市洪山区张家湾101号'}]
+2025-05-24 09:43:18,078 - INFO - 表单操作: 提交应急保供日度批发进销存数据，返回信息: {"code":400,"message":"请求参数错误！","data":"empty String"}
+2025-05-24 09:43:18,084 - INFO - 表单操作: 提交数据：
+[{'loginName': 'whlyjtcomcn1', 'commodityId': '请选择', 'amount': '', 'stock': '', 'instock': '', 'rptdate': '2025-05-24', 'createTime': '2025-05-24 09:43:18', 'updateTime': '2025-05-24 09:43:18', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '请选择', 'manufacturerName': '百事食品（中国）有限公司武汉分厂', 'manufacturerAddress': '武汉市东西湖区走马岭汇通大道10号'}]
+2025-05-24 09:43:48,120 - INFO - 表单操作: 提交应急保供日度批发进销存数据，返回信息: {"code":400,"message":"请求参数错误！","data":"empty String"}
+2025-05-24 09:43:48,120 - INFO - 表单操作: 提交数据：
+[{'loginName': 'whlyjtcomcn1', 'commodityId': '请选择', 'amount': '', 'stock': '', 'instock': '', 'rptdate': '2025-05-24', 'createTime': '2025-05-24 09:43:48', 'updateTime': '2025-05-24 09:43:48', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '请选择', 'manufacturerName': '张家湾食品厂', 'manufacturerAddress': '武汉市洪山区张家湾101号'}, {'loginName': 'whlyjtcomcn1', 'commodityId': '请选择', 'amount': '', 'stock': '', 'instock': '', 'rptdate': '2025-05-24', 'createTime': '2025-05-24 09:43:48', 'updateTime': '2025-05-24 09:43:48', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '请选择', 'manufacturerName': '百事食品（中国）有限公司武汉分厂', 'manufacturerAddress': '武汉市东西湖区走马岭汇通大道10号'}]
+2025-05-24 11:14:40,402 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 11:14:40,416 - INFO - 表单操作: 提交数据：
+[]
+2025-05-24 11:33:46,635 - INFO - 登录日志: 用户admin登录成功
+2025-05-24 11:49:33,840 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 11:49:33,854 - INFO - 表单操作: 提交数据：
+[]
+2025-05-24 12:09:09,891 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 12:09:09,891 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '22', 'QNTQZ': '121'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '22', 'QNTQZ': '121'}]]
+2025-05-24 12:16:29,239 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 12:16:29,239 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '22', 'QNTQZ': '121'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '22', 'QNTQZ': '121'}]]
+2025-05-24 12:46:39,688 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 12:46:39,693 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '22', 'QNTQZ': '121'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '22', 'QNTQZ': '121'}]]
+2025-05-24 14:15:42,762 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:15:42,777 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:21:07,376 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:21:07,379 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:22:30,818 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:22:30,819 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:23:13,253 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:23:13,254 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:25:48,198 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:25:48,199 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:33:01,549 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:33:01,556 - INFO - 表单操作: 提交数据：
+[[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]]
+2025-05-24 14:33:16,306 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:33:16,307 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:33:26,463 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:33:26,464 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:44:49,747 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:44:49,751 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:45:38,874 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:45:38,875 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:48:53,281 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:48:53,282 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:49:32,412 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:49:32,412 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:51:00,181 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:51:00,196 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': '222', 'QNTQZ': '212'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': '222', 'QNTQZ': '212'}]
+2025-05-24 14:56:43,636 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 14:56:43,637 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': 222.0, 'QNTQZ': 212.0}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': 222.0, 'QNTQZ': 212.0}]
+2025-05-24 15:05:18,590 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:05:18,591 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}]
+2025-05-24 15:05:20,375 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:05:20,376 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}]
+2025-05-24 15:05:46,285 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:05:46,285 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}]
+2025-05-24 15:06:08,642 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:06:08,643 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24'}]
+2025-05-24 15:11:59,316 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:11:59,329 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '10', 'BQZ': 0.0, 'QNTQZ': 0.0}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-24', 'ZB': '11', 'BQZ': 0.0, 'QNTQZ': 0.0}]
+2025-05-24 15:19:53,030 - INFO - 表单操作: 提交重点零售企业商品销售额统计旬报，返回信息: {"result":false,"errorCode":"noParams","message":"没有任何参数"}
+2025-05-24 15:19:53,030 - INFO - 表单操作: 提交数据：
+[{'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-21', 'ZB': '10', 'BQZ': 0.0, 'QNTQZ': 0.0}, {'TYSHXYDM': '91420100MA49HLCM9Q', 'DWMC': '武汉粮油集团有限公司', 'BBQ': '202505中旬', 'DWFZR': '分管领导XXX', 'TBR': 'admin', 'LXDH': '13800138000', 'BCRQ': '2025-05-21', 'ZB': '11', 'BQZ': 0.0, 'QNTQZ': 0.0}]
+2025-05-24 16:28:29,925 - INFO - 表单操作: 提交（网点维度）应急保供日度批发进销存数据信息，返回信息: {"code":"400","message":"网点不存在"}
+2025-05-24 16:28:29,929 - INFO - 表单操作: 提交数据：
+[{'nodeCode': '', 'foreignId': '请选择', 'commodityId': '请选择', 'stock': 80.0, 'instock': 0.0, 'amount': 50.0, 'rptdate': '2025-05-24'}]
+2025-05-24 16:32:20,899 - INFO - 表单操作: 提交（网点维度）应急保供日度批发进销存数据信息，返回信息: {"code":"200","message":"操作成功"}
+2025-05-24 16:32:20,901 - INFO - 表单操作: 提交数据：
+[{'nodeCode': '', 'foreignId': 'wuly000002', 'commodityId': '110301', 'stock': 30.0, 'instock': 30.0, 'amount': 36.0, 'rptdate': '2025-05-24'}, {'nodeCode': '', 'foreignId': 'wuly000014', 'commodityId': '110301', 'stock': 80.0, 'instock': 0.0, 'amount': 50.0, 'rptdate': '2025-05-24'}]
+2025-05-24 16:36:09,807 - INFO - 表单操作: 提交应急保供日度批发进销存数据，返回信息: {"code":200,"message":"操作成功"}
+2025-05-24 16:36:09,808 - INFO - 表单操作: 提交数据：
+[{'loginName': 'whlyjtcomcn1', 'commodityId': '280020', 'amount': 35.0, 'stock': 12.0, 'instock': 50.0, 'rptdate': '2025-05-24', 'createTime': '2025-05-24 16:36:09', 'updateTime': '2025-05-24 16:36:09', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '810000', 'manufacturerName': '张家湾食品厂', 'manufacturerAddress': '武汉市洪山区张家湾101号'}, {'loginName': 'whlyjtcomcn1', 'commodityId': '150', 'amount': 100.0, 'stock': 150.0, 'instock': 50.0, 'rptdate': '2025-05-24', 'createTime': '2025-05-24 16:36:09', 'updateTime': '2025-05-24 16:36:09', 'linkman': 'admin', 'telephone': '13800138000', 'memo': '正常波动', 'leader': '分管领导XXX', 'statistician': 'admin', 'originPlace': '820000', 'manufacturerName': '百事食品（中国）有限公司武汉分厂', 'manufacturerAddress': '武汉市东西湖区走马岭汇通大道10号'}]

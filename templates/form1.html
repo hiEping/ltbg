@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态表单管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 配置 Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#64748B',
+                        success: '#10B981',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        info: '#06B6D4',
+                        light: '#F1F5F9',
+                        dark: '#1E293B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .form-shadow {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      }
+      .table-hover-effect {
+        transition: all 0.2s ease-in-out;
+      }
+      .btn-pulse {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        }
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-table text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-gray-800">动态表单管理系统</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button
+                    class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center">
+                    <i class="fa fa-save mr-2"></i> 保存
+                </button>
+                <button
+                    class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg transition-all duration-300 flex items-center">
+                    <i class="fa fa-question-circle mr-2"></i> 帮助
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 表单卡片 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 transform transition-all duration-300 hover:shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">基本信息</h2>
+                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">必填项</span>
+            </div>
+
+            <form id="mainForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-group">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa fa-user text-gray-400"></i>
+                            </div>
+                            <input type="text" id="name"
+                                class="pl-10 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                placeholder="请输入姓名">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa fa-envelope text-gray-400"></i>
+                            </div>
+                            <input type="email" id="email"
+                                class="pl-10 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                placeholder="请输入邮箱">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">电话</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa fa-phone text-gray-400"></i>
+                            </div>
+                            <input type="tel" id="phone"
+                                class="pl-10 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                placeholder="请输入电话">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">性别</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa fa-venus-mars text-gray-400"></i>
+                            </div>
+                            <select id="gender"
+                                class="pl-10 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-primary focus:border-primary appearance-none bg-white">
+                                <option value="">请选择性别</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                                <option value="other">其他</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i class="fa fa-chevron-down text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- 表格卡片 -->
+        <div class="bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">项目明细</h2>
+                <button id="addRow"
+                    class="bg-success hover:bg-success/90 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center">
+                    <i class="fa fa-plus mr-2"></i> 添加项目
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table id="dataTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                项目名称</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                数量</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                单价</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                金额</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- 初始行 -->
+                        <tr class="hover:bg-gray-50 table-hover-effect">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="text"
+                                    class="item-name block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                    value="示例项目">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="number"
+                                    class="item-quantity block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                    value="1" min="1">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="number"
+                                    class="item-price block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
+                                    value="100.00" step="0.01" min="0">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="item-amount font-medium">¥100.00</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button
+                                    class="delete-row text-danger hover:text-danger/80 transition-colors duration-200">
+                                    <i class="fa fa-trash"></i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">总计：</td>
+                            <td class="px-6 py-4 whitespace-nowrap font-bold">
+                                <span id="totalAmount">¥100.00</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="mt-6 flex justify-end space-x-4">
+                <button type="button"
+                    class="bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 transform hover:scale-105">
+                    <i class="fa fa-times mr-2"></i> 取消
+                </button>
+                <button type="button"
+                    class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center">
+                    <i class="fa fa-check mr-2"></i> 提交表单
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white mt-12 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa fa-table text-primary text-xl"></i>
+                        <span class="text-lg font-bold">动态表单管理系统</span>
+                    </div>
+                    <p class="text-gray-400 mt-2">高效、智能的表单处理解决方案</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fa fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400 text-sm">
+                &copy; 2025 动态表单管理系统. 保留所有权利.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 获取表格和添加按钮
+            const table = document.getElementById('dataTable');
+            const addRowBtn = document.getElementById('addRow');
+            const tbody = table.querySelector('tbody');
+            const totalAmountEl = document.getElementById('totalAmount');
+
+            // 添加新行
+            addRowBtn.addEventListener('click', function () {
+                // 创建新行
+                const newRow = document.createElement('tr');
+                newRow.className = 'hover:bg-gray-50 table-hover-effect';
+                newRow.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <input type="text" class="item-name block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary" placeholder="项目名称">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <input type="number" class="item-quantity block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary" value="1" min="1">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <input type="number" class="item-price block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary" value="0.00" step="0.01" min="0">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="item-amount font-medium">¥0.00</span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <button class="delete-row text-danger hover:text-danger/80 transition-colors duration-200">
+              <i class="fa fa-trash"></i> 删除
+            </button>
+          </td>
+        `;
+
+                // 添加到表格
+                tbody.appendChild(newRow);
+
+                // 添加淡入动画
+                newRow.style.opacity = '0';
+                newRow.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    newRow.style.opacity = '1';
+                    newRow.style.transform = 'translateY(0)';
+                    newRow.style.transition = 'opacity 300ms ease, transform 300ms ease';
+                }, 10);
+
+                // 添加输入事件监听
+                setupRowEvents(newRow);
+
+                // 更新总计
+                updateTotal();
+            });
+
+            // 设置行事件
+            function setupRowEvents(row) {
+                const quantityInput = row.querySelector('.item-quantity');
+                const priceInput = row.querySelector('.item-price');
+                const amountSpan = row.querySelector('.item-amount');
+                const deleteBtn = row.querySelector('.delete-row');
+
+                // 数量或价格变化时更新金额
+                const updateAmount = () => {
+                    const quantity = parseFloat(quantityInput.value) || 0;
+                    const price = parseFloat(priceInput.value) || 0;
+                    const amount = quantity * price;
+                    amountSpan.textContent = `¥${amount.toFixed(2)}`;
+
+                    // 添加数字变化动画
+                    amountSpan.style.transition = 'all 0.3s ease';
+                    amountSpan.style.color = '#3B82F6';
+                    setTimeout(() => {
+                        amountSpan.style.color = '';
+                    }, 300);
+
+                    // 更新总计
+                    updateTotal();
+                };
+
+                quantityInput.addEventListener('input', updateAmount);
+                priceInput.addEventListener('input', updateAmount);
+
+                // 删除行
+                deleteBtn.addEventListener('click', function () {
+                    // 添加删除动画
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    row.style.height = row.offsetHeight + 'px';
+
+                    setTimeout(() => {
+                        row.style.height = '0';
+                        row.style.margin = '0';
+                        row.style.padding = '0';
+                        row.style.overflow = 'hidden';
+
+                        setTimeout(() => {
+                            row.remove();
+                            updateTotal();
+                        }, 300);
+                    }, 100);
+                });
+            }
+
+            // 更新总计
+            function updateTotal() {
+                const amountElements = table.querySelectorAll('.item-amount');
+                let total = 0;
+
+                amountElements.forEach(el => {
+                    const amount = parseFloat(el.textContent.replace('¥', '')) || 0;
+                    total += amount;
+                });
+
+                // 添加总计变化动画
+                totalAmountEl.style.transition = 'all 0.5s ease';
+                totalAmountEl.style.fontSize = '1.2em';
+
+                setTimeout(() => {
+                    totalAmountEl.textContent = `¥${total.toFixed(2)}`;
+                    totalAmountEl.style.fontSize = '';
+                }, 100);
+            }
+
+            // 为现有行设置事件
+            const existingRows = tbody.querySelectorAll('tr');
+            existingRows.forEach(row => {
+                setupRowEvents(row);
+            });
+
+            // 表单字段动画
+            const formInputs = document.querySelectorAll('#mainForm input, #mainForm select');
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function () {
+                    this.parentElement.classList.add('scale-105');
+                    this.parentElement.style.transition = 'transform 0.3s ease';
+                });
+
+                input.addEventListener('blur', function () {
+                    this.parentElement.classList.remove('scale-105');
+                });
+            });
+
+            // 页面滚动时导航栏效果
+            window.addEventListener('scroll', function () {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 10) {
+                    nav.classList.add('shadow-lg');
+                    nav.classList.add('bg-white/95');
+                    nav.classList.add('backdrop-blur-sm');
+                } else {
+                    nav.classList.remove('shadow-lg');
+                    nav.classList.remove('bg-white/95');
+                    nav.classList.remove('backdrop-blur-sm');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

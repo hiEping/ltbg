@@ -11,14 +11,16 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/sticky-footer-navbar/">
 
+    {% block head_extend %}{% endblock %}
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static', filename='assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"
         rel="stylesheet">
 
 
-    {% block style %}
+    {% block styles %}
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -47,6 +49,14 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
+        .custom-form {
+            background: linear-gradient(135deg, #f9f9f9 0%, #e9e9e9 100%);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+        }
     </style>
     {% endblock %}
 
@@ -54,7 +64,7 @@
     <link href="{{url_for('static', filename='sticky-footer-navbar.css')}}" rel="stylesheet">
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 bg-gray-50">
     <!-- Toast 容器 -->
     <div class="toast-container"></div>
     <header>
@@ -67,7 +77,13 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown ml-5 ">
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="/index">首&nbsp;&nbsp;页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">&nbsp;/&nbsp;</a>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                             aria-expanded="false">
                             数据录入
@@ -78,6 +94,9 @@
                             <a class="dropdown-item" href="/zb_xb">商品销售额统计旬报</a>
                             <a class="dropdown-item" href="/wdPfJxc">网点日度批发进销存数据</a>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">&nbsp;/&nbsp;</a>
                     </li>
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -111,15 +130,11 @@
 
     <main role="main" class="flex-shrink-0">
         {% block page_content %}{% endblock %}
+        <div style="height: 300px;"></div>
     </main>
 
     <footer class="footer mt-5 py-3 fixed-bottom">
-        <div class="container">
-            <!-- <span class="text-muted">Place sticky footer content here.</span> -->
-            <button type="button" class="btn btn-primary mr-3"
-                onclick="createToast('操作成功', '您的请求已成功处理！', 'success')">保存</button>
-            <button type="button" class="btn btn-primary mr-5">保存并上传</button>
-        </div>
+        {% block footer_content %}{% endblock %}
     </footer>
     <script>
         // // 基本 Toast
@@ -145,7 +160,7 @@
             };
 
             const toastHTML = `
-                <div class="toast custom-toast" data-autohide="true" data-delay="2000">
+                <div class="toast custom-toast" data-autohide="true" data-delay="3000">
                 <div class="toast-header">
                     <i class="fas ${iconClass[type]} mr-2"></i>
                     <strong class="mr-auto">${title}</strong>
@@ -174,6 +189,8 @@
     <!-- <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script> -->
     <script src="{{url_for('static', filename='assets/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     {% block scripts %}{% endblock %}
 </body>
 

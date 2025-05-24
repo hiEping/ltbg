@@ -1,12 +1,207 @@
 {% extends "base.html" %}
+
 {% block page_content %}
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <div class="alert alert-primary mt-3" role="alert">
-            <p class="mt-3">用于批发市场企业上传标准商品的进货量、销售量、库存量数据。</p>
-            <p class="">报表日期、企业统一平台编码、品类编码、产地，四者作为联合增量，需唯一。</p>
-        </div>
-        <h5 class="mt-3">录入应急保供日度批发进销存数据</h5>
+<div class="container">
+    <div class="alert alert-primary mt-3" role="alert">
+        <p class="mt-3">用于批发市场企业上传标准商品的进货量、销售量、库存量数据。</p>
+        <p class="">报表日期、企业统一平台编码、品类编码、产地，四者作为联合增量，需唯一。</p>
     </div>
-</main>
+    <h5 class="my-5">录入应急保供日度批发进销存数据</h5>
+    <form id="dataForm" class="custom-form">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rptdate">报表日期:</label>
+                    <input type="text" class="form-control" id="rptdate" name="rptdate">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="detailTable">简要分析</label>
+                    <textarea class="form-control" id="memo" name="memo" rows="3">{{memo}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div clas="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="clearfix">
+                        <h6 class="float-left py-1 ">（批发）交易数据明细</h6>
+                        <a id="addItemBtn" type="button" class="btn btn-secondary btn-sm float-right"
+                            onclick="addNewItem">添加明细</a>
+                    </div>
+                    <table class="table table-sm table-borderless mt-1" name="detailTable" id="detailTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col" style="width: 20%;">品类编码</th>
+                                <th scope="col" style="width: 8%;">交易量</th>
+                                <th scope="col" style="width: 8%;">库存量</th>
+                                <th scope="col" style="width: 8%;">进货量</th>
+                                <th scope="col" style="width: 20%;">产地</th>
+                                <th scope="col" style="width: 30%;">生产商</th>
+                                <th scope="col" style="width: 15%;" class="d-none">生产商地址</th>
+                                <th scope="col">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block footer_content %}
+<div class="container d-flex justify-content-end">
+    <!-- <span class="text-muted">Place sticky footer content here.</span> -->
+    <!-- <button type="button" class="btn btn-default mr-3" onclick="createToast('操作成功', '您的请求已成功处理！', 'success')">toast
+        test</button> -->
+    <button type="submit" class="btn btn-primary btn-sm px-3" form="dataForm">提交</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // 获取当前日期 (YYYY-MM-DD)
+    function getCurrentDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 获取当前日期时间 (YYYY-MM-DD HH:MM:SS)
+    function getCurrentDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // 添加新商品项
+    function addNewItem() {
+        const container = document.getElementById('detailTable');
+        const newItem = document.createElement('tr');
+        newItem.innerHTML = `
+                                <td>
+                                    <select class="form-control " name="commodityId[]">
+                                        <option selected>请选择</option>
+                                        {% for c in commodities %}
+                                        <option value={{c.commodity_id}}>
+                                            {{c.commodity_id}}-{{c.commodity_name}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" name="amount[]" value="0"></td>
+                                <td><input type="text" class="form-control" name="stock[]" value="0"></td>
+                                <td><input type="text" class="form-control" name="instock[]" value="0"></td>
+                                <td>
+                                    <select class="form-control" name="originPlace[]">
+                                        <option selected>请选择</option>
+                                        {% for o in originPlaces %}
+                                            <option value={{o.qy_code}}>
+                                                {{o.qy_code}}-{{o.qy_name}}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" name="manufacturerName[]">
+                                        <option selected>请选择</option>
+                                        {% for m in manufatucres %}
+                                        <option value={{m.name}} data-manufacturerAddress={{m.address}}>
+                                            {{m.name}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="d-none">
+                                    <input type="text" class="form-control " name="manufacturerAddress[]">                                    
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            `;
+
+        container.prepend(newItem);
+
+        // 为删除按钮添加事件
+        newItem.querySelector('button').addEventListener('click', function () {
+            container.removeChild(newItem);
+        });
+        newItem.querySelector('select[name="manufacturerName[]"]').addEventListener('change', function () {
+            // 获取当前选中的 option 元素
+            const selectedOption = $(this).find('option:selected');
+
+            // 获取 option 的 data-manufacturerAddress 属性值
+            const address = selectedOption.attr('data-manufacturerAddress');
+
+            newItem.querySelector('input[name="manufacturerAddress[]"]').value = address
+        })
+    }
+
+    // 初始化页面
+    $(document).ready(function () {
+        // 获取当前日期
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; // 格式化为 YYYY-MM-DD
+
+        // 初始化日期选择器并设置初始值
+        $('#rptdate').datepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd', // 日期格式
+            todayHighlight: true, // 高亮今天
+            autoclose: true       // 选择后自动关闭
+        }).datepicker('setDate', formattedDate); // 设置初始值
+
+        //给表格添加第一行
+        addNewItem();
+
+        //添加新商品点击事件处理
+        document.getElementById('addItemBtn').addEventListener('click', addNewItem);
+
+        // 表单提交处理
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 使用FormData对象收集表单数据
+            const formData = new FormData(this);
+
+            // 模拟提交数据
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
+
+            // 发送数据
+            fetch('/pfJxc', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    dataobj = JSON.parse(data.message)
+                    if (data.code && data.code == 200)
+                        createToast('成功', '数据已上传', 'success')
+                    else
+                        createToast('错误', '数据上传出错', 'error')
+                })
+                .catch(error => console.error('Error:', error));
+            /*
+            */
+        });
+    });
+</script>
 {% endblock %}
